@@ -33,6 +33,7 @@ c.stroke();
 let circle2X = Math.floor(Math.random()*(startingRadius*2))+circleX-startingRadius
 let circle2Y = Math.floor(Math.random()*(startingRadius*2))+circleY-startingRadius
 let radius2 = startingRadius/2;
+//TODO make random from difference so it isn't always in the center
 if(circle2X+radius2>circleX+startingRadius){
     let diff = circle2X -circleX;
     circle2X = circle2X - diff;
