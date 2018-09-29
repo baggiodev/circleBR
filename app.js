@@ -52,3 +52,5 @@ c.beginPath();
 c.arc(circle2X,circle2Y,radius2,0,Math.PI*2);
 c.stroke()
 //TODO: Fix bug where circle can go outside because corners
+
+//TODO find slope between two circles then redraw circles until they equal by changing the bigger circle(first)
