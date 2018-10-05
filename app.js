@@ -6,7 +6,28 @@ canvas.width = window.innerWidth;
 
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
-const startingRadius = 400;
+let startingRadius = 400;
+let circleNum = 0;
+function Circle(xCenter,yCenter){
+    this.num = circleNum;
+    this.xCenter = xCenter;
+    this.yCenter = yCenter;
+    console.log(startingRadius,this.num);
+    this.radius = startingRadius/(this.num+1);
+    circleNum++;
+    this.update = function(){
+        
+    }
+    this.draw = function(){
+        c.beginPath();
+        c.arc(this.xCenter,this.yCenter,this.radius,0,Math.PI *2);
+        c.stroke();
+    }
+    this.closeCircle = function(){
+
+    }
+}
+
 
 //circle 1
 let circleX = Math.floor(Math.random()*canvasWidth);
@@ -25,9 +46,8 @@ if(circleY+startingRadius>canvasHeight){
 }else if(circleY-startingRadius<0){
     circleY+= startingRadius;
 }
-c.beginPath();
-c.arc(circleX,circleY,startingRadius,0,Math.PI *2);
-c.stroke();
+let bigCircle = new Circle(circleX,circleY);
+bigCircle.draw();
 
 //circle 2
 let circle2X = Math.floor(Math.random()*(startingRadius*2))+circleX-startingRadius
@@ -54,3 +74,6 @@ c.stroke()
 //TODO: Fix bug where circle can go outside because corners
 
 //TODO find slope between two circles then redraw circles until they equal by changing the bigger circle(first)
+function makeNewCircle(){
+
+}
