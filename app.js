@@ -12,19 +12,12 @@ function Circle(xCenter,yCenter){
     this.num = circleNum;
     this.xCenter = xCenter;
     this.yCenter = yCenter;
-    console.log(startingRadius,this.num);
     this.radius = startingRadius/(this.num+1);
     circleNum++;
-    this.update = function(){
-        
-    }
     this.draw = function(){
         c.beginPath();
         c.arc(this.xCenter,this.yCenter,this.radius,0,Math.PI *2);
         c.stroke();
-    }
-    this.closeCircle = function(){
-
     }
 }
 
@@ -50,30 +43,62 @@ let bigCircle = new Circle(circleX,circleY);
 bigCircle.draw();
 
 //circle 2
-let circle2X = Math.floor(Math.random()*(startingRadius*2))+circleX-startingRadius
-let circle2Y = Math.floor(Math.random()*(startingRadius*2))+circleY-startingRadius
+let circle2X = Math.floor(Math.random()*(startingRadius*2))+bigCircle.xCenter-startingRadius
+let circle2Y = Math.floor(Math.random()*(startingRadius*2))+bigCircle.yCenter-startingRadius
 let radius2 = startingRadius/2;
 //TODO make random from difference so it isn't always in the center
-if(circle2X+radius2>circleX+startingRadius){
-    let diff = circle2X -circleX;
+if(circle2X+radius2>bigCircle.xCenter+startingRadius){
+    let diff = circle2X -bigCircle.xCenter;
     circle2X = circle2X - diff;
-}else if(circle2X-radius2<circleX-startingRadius){
-    let diff = circle2X -circleX;
+}else if(circle2X-radius2<bigCircle.xCenter-startingRadius){
+    let diff = circle2X -bigCircle.xCenter;
     circle2X = circle2X - diff;
 }
-if(circle2Y+radius2>circleY+startingRadius){
-    let diff = circle2Y-circleY;
+if(circle2Y+radius2>bigCircle.yCenter+startingRadius){
+    let diff = circle2Y-bigCircle.yCenter;
     circle2Y = circle2Y - diff
-}else if(circle2Y-radius2<circleY-startingRadius){
-    let diff = circle2Y-circleY;
+}else if(circle2Y-radius2<bigCircle.yCenter-startingRadius){
+    let diff = circle2Y-bigCircle.yCenter;
     circle2Y = circle2Y - diff 
 }
-c.beginPath();
-c.arc(circle2X,circle2Y,radius2,0,Math.PI*2);
-c.stroke()
+let smallCircle = new Circle(circle2X,circle2Y)
+smallCircle.draw();
+
+let dy = bigCircle.yCenter - smallCircle.yCenter;
+let dx = bigCircle.xCenter - smallCircle.xCenter;
+console.log(dx,dy)
 //TODO: Fix bug where circle can go outside because corners
-
-//TODO find slope between two circles then redraw circles until they equal by changing the bigger circle(first)
-function makeNewCircle(){
-
+function checker(){
+    c.clearRect(0, 0, canvasWidth, canvasHeight)
+    if(dy!=0 || dx!=0){
+    console.log(dx,dy);
+        if(dy>0){
+            bigCircle.yCenter--;
+            dy = dy - 1
+        } 
+        if(dy<0){
+            bigCircle.yCenter++;
+            dy = dy + 1;
+        }
+        if(dx>0){
+            bigCircle.xCenter--;
+            dx = dx - 1;
+        }
+        if(dx<0){
+            bigCircle.xCenter++;
+            dx = dx + 1;
+        }
+    }
+    if(bigCircle.radius!==smallCircle.radius){
+        bigCircle.radius--;
+    }
+    bigCircle.draw();
+    smallCircle.draw();
+    //&&smallCircle.yCenter===bigCircle.yCenter && smallCircle.radius===bigCircle.radius
+    if(smallCircle.xCenter===bigCircle.xCenter&&smallCircle.yCenter===bigCircle.yCenter && smallCircle.radius===bigCircle.radius){
+        console.log("ok")
+    }else{
+        window.requestAnimationFrame(checker);
+    }
 }
+checker();
